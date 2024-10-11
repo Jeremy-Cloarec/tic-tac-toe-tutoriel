@@ -1,5 +1,5 @@
 import Board from "./Board";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Game() {
     const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -7,30 +7,43 @@ export default function Game() {
     const xIsNext = currentMove % 2 === 0;
     const currentSquares = history[currentMove];
 
-    useEffect(() => {
-        console.log(history);
-    }, [history])
-
     function handlePlay(nextSquares: string[]) {
         const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
         setHistory(nextHistory);
         setCurrentMove(nextHistory.length - 1)
     }
 
-    function jumpTo(nextMove: number) {
+    function jumpTo(nextMove: number, description: string) {
+        description = "hello"
         setCurrentMove(nextMove)
+
     }
 
     const moves = history.map((_, move) => {
-        let description;
+        //setLiCurrentMove(false)
+        let description: string;
+        let liCurrentMove: boolean = false;
+
         if (move > 0) {
             description = `Go to move #${move}`
         } else {
             description = 'Go to game start'
         }
+
+        if (move === currentMove && move > 0) {
+            description = `You are at move #${move}`
+            liCurrentMove = true
+        } else if(move === currentMove){
+            description = "Go to game start";
+            liCurrentMove = true;
+        }
+
         return (
             <li key={move}>
-                <button onClick={() => jumpTo(move)}> {description}</button>
+                {!liCurrentMove ?
+                    (<button onClick={() => jumpTo(move, description)}> {description}</button>)
+                    :
+                    (<p className="font-semibold">{description}</p>)}
             </li>
         )
     })
