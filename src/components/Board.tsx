@@ -8,7 +8,7 @@ interface BoardProp {
 }
 
 export default function Board({ xIsNext, squares, onPlay }: BoardProp) {
-    console.log( squares);
+    console.log(squares);
 
     function handleClick(i: number) {
         //early return if te square is filled
@@ -29,16 +29,38 @@ export default function Board({ xIsNext, squares, onPlay }: BoardProp) {
         status = "Next player: " + (xIsNext ? "X" : "O");
     }
 
-    const squaresRendered = squares.map((value, index) => (
-        <li key={index}>
-            <Square value={value} onSquareClick={() => handleClick(index)} />
-        </li>
-    ));
+    const squaresRendered = [];
+    for (let i = 0; i < 3; i++) {
+        const row = [];
+        for (let j = 0; j < 3; j++) {
+            row.push(squares[i * 3 + j]);
+        }
+        squaresRendered.push(row);
+    }
+
+    console.log(squaresRendered);
 
     return (
         <>
             <div className="mb-3">{status}</div>
-            <ul className="grid grid-cols-3 gap-3">{squaresRendered}</ul>
+            <ul className="flex flex-col gap-1 bg-slate-900">
+                {squaresRendered.map((row, rowIndex) => (
+                    <li key={rowIndex}>
+                        <ul className="flex gap-1">
+                            {row.map((value, colIndex) => {
+                                const index = rowIndex * 3 + colIndex;
+                                return (
+                                    <li key={colIndex}>
+                                        <Square value={value} onSquareClick={() => handleClick(index)} />
+                                    </li>
+                                );
+                            })}
+
+                        </ul>
+                    </li>
+                ))}
+            </ul>
+
         </>
     )
 }
