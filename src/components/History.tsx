@@ -1,11 +1,15 @@
+import { useState } from "react";
+
 interface HistoryProp {
     history: string[][];
     currentMove: number;
     jumpTo: (move: number) => void
 }
 export default function History({ history, currentMove, jumpTo }: HistoryProp) {
+    let [reversed, setReversed] = useState(false);
+    let src = "";
     //Show history of each move. OnClick, update current move
-    const moves = history.map((_, move) => {
+    let moves = history.map((_, move) => {
         let description: string;
         let liCurrentMove: boolean = false;
 
@@ -19,7 +23,7 @@ export default function History({ history, currentMove, jumpTo }: HistoryProp) {
             description = `You are at move #${move}`
             liCurrentMove = true
         } else if (move === currentMove) {
-            description = "Go to game start";
+            description = "You are at game start";
             liCurrentMove = true;
         }
 
@@ -32,7 +36,28 @@ export default function History({ history, currentMove, jumpTo }: HistoryProp) {
             </li>
         )
     })
+
+    if (reversed) moves = moves.reverse()
+    !reversed ? src = "../../assets/sort.png" : src = "../../assets/sortReverse.png"
+
     return (
-        <ol>{moves}</ol>
+        <div className="flex flex-col gap-2">
+            <div className="flex justify-between items-center">
+                <h2 className="font-semibold">Historique</h2>
+                <button
+                    onClick={() => setReversed(reversed = !reversed)}
+                    className="bg-white py-1 px-1 rounded-sm">
+
+                    {reversed ? ("") : ("")}
+
+                    <img
+                        src={src}
+                        alt="sort logo"
+                        className="w-4.5"
+                    />
+                </button>
+            </div>
+            <ul>{moves}</ul>
+        </div>
     )
 }

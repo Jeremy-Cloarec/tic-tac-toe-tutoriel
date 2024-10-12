@@ -31,7 +31,7 @@ export default function Game() {
 
     return (
         <>
-            <div>
+            <div className="flex flex-col gap-4 ">
                 <Status
                     squares={currentSquares}
                     xIsNext={xIsNext}

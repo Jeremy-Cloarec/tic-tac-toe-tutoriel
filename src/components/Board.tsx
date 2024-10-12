@@ -40,8 +40,6 @@ export default function Board({ xIsNext, squares, onPlay }: BoardProp) {
         squaresRendered.push(row);
     }
 
-    console.log(squaresRendered);
-
     return (
         <>
             <ul className="flex flex-col gap-1 bg-slate-900">

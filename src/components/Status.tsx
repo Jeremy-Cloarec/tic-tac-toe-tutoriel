@@ -16,5 +16,5 @@ export default function Status({ squares, xIsNext }: StatusProps) {
         status = "Next player: " + (xIsNext ? "X" : "O");
     }
 
-    return <div className="mb-3">{status}</div>
+    return <div>{status}</div>
 }
