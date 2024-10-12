@@ -1,4 +1,6 @@
 import { useState } from "react";
+import sort from '../assets/sort.png'
+import sortReverse from '../assets/sortReverse.png'
 
 interface HistoryProp {
     history: string[][];
@@ -38,7 +40,7 @@ export default function History({ history, currentMove, jumpTo }: HistoryProp) {
     })
 
     if (reversed) moves = moves.reverse()
-    !reversed ? src = "../../assets/sort.png" : src = "../../assets/sortReverse.png"
+    !reversed ? src = sort : src = sortReverse
 
     return (
         <div className="flex flex-col gap-2">
@@ -47,9 +49,6 @@ export default function History({ history, currentMove, jumpTo }: HistoryProp) {
                 <button
                     onClick={() => setReversed(reversed = !reversed)}
                     className="bg-white py-1 px-1 rounded-sm">
-
-                    {reversed ? ("") : ("")}
-
                     <img
                         src={src}
                         alt="sort logo"
