@@ -22,20 +22,6 @@ export default function Board({ xIsNext, squares, onPlay }: BoardProp) {
         xIsNext ? nextSquares[i] = "X" : nextSquares[i] = "O";
         onPlay(nextSquares)
     }
-
-    /*
-    winner: stock winner name
-    status: define winne rif it exist, as if it show the next player
-    */
-    const winner = calculateWinner(squares)
-    let status;
-
-    if (winner) {
-        status = "Winner: " + winner;
-    } else {
-        status = "Next player: " + (xIsNext ? "X" : "O");
-    }
-
     /* 
     squaresRendered: a tow dimensionnal array makes with the prop squares
     it use double for loop. This is how it work:
@@ -58,7 +44,6 @@ export default function Board({ xIsNext, squares, onPlay }: BoardProp) {
 
     return (
         <>
-            <div className="mb-3">{status}</div>
             <ul className="flex flex-col gap-1 bg-slate-900">
                 {squaresRendered.map((row, rowIndex) => (
                     <li key={rowIndex}>

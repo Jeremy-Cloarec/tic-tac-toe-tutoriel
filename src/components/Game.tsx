@@ -1,5 +1,7 @@
 import Board from "./Board";
 import { useState } from "react";
+import History from "./History";
+import Status from "./Status";
 
 export default function Game() {
     // A double array with nine element = null
@@ -7,7 +9,7 @@ export default function Game() {
     //show current move with inital value = 0 (beginning of the part)
     const [currentMove, setCurrentMove] = useState(0);
     //true if current move is even
-    const xIsNext:boolean = currentMove % 2 === 0;
+    const xIsNext: boolean = currentMove % 2 === 0;
     //array with currentMove index    
     const currentSquares = history[currentMove];
 
@@ -17,7 +19,7 @@ export default function Game() {
     function handlePlay(nextSquares: string[]) {
         const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
         console.log(nextHistory);
-        
+
         setHistory(nextHistory);
         setCurrentMove(nextHistory.length - 1)
     }
@@ -27,46 +29,23 @@ export default function Game() {
         setCurrentMove(nextMove)
     }
 
-    //Show history of each move. OnClick, update current move
-    const moves = history.map((_, move) => {
-        let description: string;
-        let liCurrentMove: boolean = false;
-
-        if (move > 0) {
-            description = `Go to move #${move}`
-        } else {
-            description = 'Go to game start'
-        }
-
-        if (move === currentMove && move > 0) {
-            description = `You are at move #${move}`
-            liCurrentMove = true
-        } else if(move === currentMove){
-            description = "Go to game start";
-            liCurrentMove = true;
-        }
-
-        return (
-            <li key={move}>
-                {!liCurrentMove ?
-                    (<button onClick={() => jumpTo(move)}> {description}</button>)
-                    :
-                    (<p className="font-semibold">{description}</p>)}
-            </li>
-        )
-    })
-
     return (
         <>
             <div>
+                <Status
+                    squares={currentSquares}
+                    xIsNext={xIsNext}
+                />
                 <Board
                     xIsNext={xIsNext}
                     squares={currentSquares}
                     onPlay={handlePlay}
                 />
-            </div>
-            <div>
-                <ol>{moves}</ol>
+                <History
+                    history={history}
+                    currentMove={currentMove}
+                    jumpTo={jumpTo}
+                />
             </div>
         </>
     )
