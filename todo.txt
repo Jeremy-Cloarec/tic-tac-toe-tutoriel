@@ -8,4 +8,3 @@
 
 * Display the location for each move in the format (row, col) in the move history list.
 
-*reset the game

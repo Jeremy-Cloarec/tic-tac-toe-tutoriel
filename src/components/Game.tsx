@@ -13,10 +13,8 @@ export default function Game() {
         setCurrentMove(nextHistory.length - 1)
     }
 
-    function jumpTo(nextMove: number, description: string) {
-        description = "hello"
+    function jumpTo(nextMove: number) {
         setCurrentMove(nextMove)
-
     }
 
     const moves = history.map((_, move) => {
@@ -41,7 +39,7 @@ export default function Game() {
         return (
             <li key={move}>
                 {!liCurrentMove ?
-                    (<button onClick={() => jumpTo(move, description)}> {description}</button>)
+                    (<button onClick={() => jumpTo(move)}> {description}</button>)
                     :
                     (<p className="font-semibold">{description}</p>)}
             </li>
