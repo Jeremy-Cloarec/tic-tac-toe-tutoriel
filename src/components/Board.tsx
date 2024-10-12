@@ -8,18 +8,25 @@ interface BoardProp {
 }
 
 export default function Board({ xIsNext, squares, onPlay }: BoardProp) {
-    console.log(squares);
-
+    /*
+    handleClick: when user click on one of the squares
+    => if square have a value, return
+    => if calculateWinner return a value, return
+    => define a copy of the prop array
+    => add value to the clicked element of this copy : "X" or "O" according to the xIsNext value
+    => call onPlay function with nextSquares as argument
+    */
     function handleClick(i: number) {
-        //early return if te square is filled
         if (squares[i] || calculateWinner(squares)) return
-
-        //copy of the array
         const nextSquares = squares.slice();
         xIsNext ? nextSquares[i] = "X" : nextSquares[i] = "O";
         onPlay(nextSquares)
     }
 
+    /*
+    winner: stock winner name
+    status: define winne rif it exist, as if it show the next player
+    */
     const winner = calculateWinner(squares)
     let status;
 
@@ -28,6 +35,15 @@ export default function Board({ xIsNext, squares, onPlay }: BoardProp) {
     } else {
         status = "Next player: " + (xIsNext ? "X" : "O");
     }
+
+    /* 
+    squaresRendered: a tow dimensionnal array makes with the prop squares
+    it use double for loop. This is how it work:
+
+    __________0________|_________1_______|________2________
+    [0x3]+0|0x3+1|0x3+2|1x3+0|1*3+1|1*3+2|2*3+0|2*3+1|2*3+2
+    =0     |=1   |=2   |=3   |=4   |=5   |=6   |=7   |=8 
+     */
 
     const squaresRendered = [];
     for (let i = 0; i < 3; i++) {
@@ -55,12 +71,10 @@ export default function Board({ xIsNext, squares, onPlay }: BoardProp) {
                                     </li>
                                 );
                             })}
-
                         </ul>
                     </li>
                 ))}
             </ul>
-
         </>
     )
 }
