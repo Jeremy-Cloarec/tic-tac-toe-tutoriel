@@ -12,16 +12,19 @@ interface HistoryProp {
 export default function History({ history, currentMove, positions, jumpTo }: HistoryProp) {
     let [reversed, setReversed] = useState(false);
     let src = "";
+
+
     //Show history of each move. OnClick, update current move
     let moves = history.map((_, move) => {
         let description: string;
+        let positionString: string = "";
         let liCurrentMove: boolean = false;
         const position = positions[move - 1]
 
         if (move > 0) {
             description = `Go to move #${move}`
             if (position) {
-                description += ` (row: ${position.row}, col: ${position.col})`;
+                positionString += `position : row: ${position.row}, col: ${position.col})`;
             }
 
         } else {
@@ -31,9 +34,10 @@ export default function History({ history, currentMove, positions, jumpTo }: His
         if (move === currentMove && move > 0) {
             description = `You are at move #${move}`
             liCurrentMove = true
-            if (position) {
-                description += ` (row: ${position.row}, col: ${position.col})`;
-            }
+
+            // if (position) {
+            //     positionString += ` (row: ${position.row}, col: ${position.col})`;
+            // }
 
         } else if (move === currentMove) {
             description = "You are at game start";
@@ -43,16 +47,17 @@ export default function History({ history, currentMove, positions, jumpTo }: His
         return (
             <li key={move}>
                 {!liCurrentMove ?
-                    (
-                        <div className="flex gap-2">
-                            <button onClick={() => jumpTo(move)}>
-                                {description}
-                            </button>
-                        </div>
+                    (<div>
+                        <button onClick={() => jumpTo(move)}>
+                            <p>{description}</p>
+                        </button>
+                        <p className="text-sm">{positionString}</p>
+                    </div>
                     )
                     :
-                    (<div className="flex gap-2">
+                    (<div>
                         <p className="font-semibold">{description}</p>
+                        <p className="text-sm">{positionString}</p>
                     </div>
                     )
                 }

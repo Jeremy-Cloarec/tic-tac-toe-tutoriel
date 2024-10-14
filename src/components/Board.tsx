@@ -62,7 +62,6 @@ export default function Board({ xIsNext, squares, onPlay }: BoardProp) {
                                     : "font-bold flex w-16 h-16 items-center justify-center bg-white text-slate-900";
                                 return (
                                     <li key={colIndex}>
-                                        <p>row: {rowIndex} col: {colIndex}</p>
                                         <Square
                                             value={value.value}
                                             onSquareClick={() => handleClick(index, rowIndex, colIndex)}
