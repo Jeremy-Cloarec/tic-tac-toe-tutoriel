@@ -8,6 +8,28 @@ interface BoardProp {
 }
 
 export default function Board({ xIsNext, squares, onPlay }: BoardProp) {
+    const winnerInfo = calculateWinner(squares);
+    const winnerSquares = winnerInfo?.winnerSquares || []
+    const squaresRendered = [];
+    /* 
+    squaresRendered: a tow dimensionnal array makes with the prop squares
+    it use double for loop. This is how it work:
+
+    __________0________|_________1_______|________2________
+    [0x3]+0|0x3+1|0x3+2|1x3+0|1*3+1|1*3+2|2*3+0|2*3+1|2*3+2
+    =0     |=1   |=2   |=3   |=4   |=5   |=6   |=7   |=8 
+     */
+    let ind = 0
+    for (let i = 0; i < 3; i++) {
+        const row = [];
+        for (let j = 0; j < 3; j++) {
+            row.push({ value: squares[i * 3 + j], ind });
+            ind++
+        }
+        squaresRendered.push(row);
+    }
+    console.log(squaresRendered);
+
     /*
     handleClick: when user click on one of the squares
     => if square have a value, return
@@ -22,23 +44,6 @@ export default function Board({ xIsNext, squares, onPlay }: BoardProp) {
         xIsNext ? nextSquares[i] = "X" : nextSquares[i] = "O";
         onPlay(nextSquares)
     }
-    /* 
-    squaresRendered: a tow dimensionnal array makes with the prop squares
-    it use double for loop. This is how it work:
-
-    __________0________|_________1_______|________2________
-    [0x3]+0|0x3+1|0x3+2|1x3+0|1*3+1|1*3+2|2*3+0|2*3+1|2*3+2
-    =0     |=1   |=2   |=3   |=4   |=5   |=6   |=7   |=8 
-     */
-
-    const squaresRendered = [];
-    for (let i = 0; i < 3; i++) {
-        const row = [];
-        for (let j = 0; j < 3; j++) {
-            row.push(squares[i * 3 + j]);
-        }
-        squaresRendered.push(row);
-    }
 
     return (
         <>
@@ -48,9 +53,17 @@ export default function Board({ xIsNext, squares, onPlay }: BoardProp) {
                         <ul className="flex gap-1">
                             {row.map((value, colIndex) => {
                                 const index = rowIndex * 3 + colIndex;
+                                const isWinnerSquare = winnerSquares.includes(value.ind);
+                                const squareStyle = isWinnerSquare
+                                ? "font-bold flex w-16 h-16 items-center justify-center bg-orange-200 text-slate-900"
+                                : "font-bold flex w-16 h-16 items-center justify-center bg-white text-slate-900";
                                 return (
                                     <li key={colIndex}>
-                                        <Square value={value} onSquareClick={() => handleClick(index)} />
+                                        <Square
+                                            value={value.value}
+                                            onSquareClick={() => handleClick(index)}
+                                            styleSquare={squareStyle}
+                                        />
                                     </li>
                                 );
                             })}

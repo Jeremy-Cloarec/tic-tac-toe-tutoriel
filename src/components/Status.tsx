@@ -8,10 +8,12 @@ export default function Status({ squares, xIsNext }: StatusProps) {
     //winner: stock winner name
     //status: define winne rif it exist, as if it show the next player
     const winner = calculateWinner(squares)
+    console.log(winner);
+    
     let status;
 
     if (winner) {
-        status = "Winner: " + winner;
+        status = "Winner: " + winner.winner;
     } else {
         status = "Next player: " + (xIsNext ? "X" : "O");
     }
