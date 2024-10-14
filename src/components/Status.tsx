@@ -11,6 +11,8 @@ export default function Status({ squares, xIsNext }: StatusProps) {
     console.log(winner);
 
     let status;
+    console.log(squares);
+    
 
     if (winner) {
         status = "Le gagnant est : " + winner.winner;

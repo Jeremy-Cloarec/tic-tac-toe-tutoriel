@@ -1,22 +1,29 @@
 import { useState } from "react";
-import sort from '../assets/sort.png'
-import sortReverse from '../assets/sortReverse.png'
+import sort from '../assets/sort.png';
+import sortReverse from '../assets/sortReverse.png';
 
 interface HistoryProp {
     history: string[][];
     currentMove: number;
-    jumpTo: (move: number) => void
+    positions: { row: number, col: number }[]
+    jumpTo: (move: number) => void;
 }
-export default function History({ history, currentMove, jumpTo }: HistoryProp) {
+
+export default function History({ history, currentMove, positions, jumpTo }: HistoryProp) {
     let [reversed, setReversed] = useState(false);
     let src = "";
     //Show history of each move. OnClick, update current move
     let moves = history.map((_, move) => {
         let description: string;
         let liCurrentMove: boolean = false;
+        const position = positions[move - 1]
 
         if (move > 0) {
             description = `Go to move #${move}`
+            if (position) {
+                description += ` (row: ${position.row}, col: ${position.col})`;
+            }
+
         } else {
             description = 'Go to game start'
         }
@@ -24,6 +31,10 @@ export default function History({ history, currentMove, jumpTo }: HistoryProp) {
         if (move === currentMove && move > 0) {
             description = `You are at move #${move}`
             liCurrentMove = true
+            if (position) {
+                description += ` (row: ${position.row}, col: ${position.col})`;
+            }
+
         } else if (move === currentMove) {
             description = "You are at game start";
             liCurrentMove = true;
@@ -32,12 +43,25 @@ export default function History({ history, currentMove, jumpTo }: HistoryProp) {
         return (
             <li key={move}>
                 {!liCurrentMove ?
-                    (<button onClick={() => jumpTo(move)}> {description}</button>)
+                    (
+                        <div className="flex gap-2">
+                            <button onClick={() => jumpTo(move)}>
+                                {description}
+                            </button>
+                        </div>
+                    )
                     :
-                    (<p className="font-semibold">{description}</p>)}
+                    (<div className="flex gap-2">
+                        <p className="font-semibold">{description}</p>
+                    </div>
+                    )
+                }
+
             </li>
         )
     })
+
+
 
     if (reversed) moves = moves.reverse()
     !reversed ? src = sort : src = sortReverse

@@ -8,6 +8,8 @@ export default function Game() {
     const [history, setHistory] = useState([Array(9).fill(null)]);
     //show current move with inital value = 0 (beginning of the part)
     const [currentMove, setCurrentMove] = useState(0);
+    const [positions, setposition] = useState<{ row: number, col: number }[]>([])
+
     //true if current move is even
     const xIsNext: boolean = currentMove % 2 === 0;
     //array with currentMove index    
@@ -16,12 +18,16 @@ export default function Game() {
     //function to update history array and current move
     //it call when use click on on square and call handleClick (in Board component)
     //nextHistoty copy history array, from 0 to currentMove + 1 and updated history with it
-    function handlePlay(nextSquares: string[]) {
+    function handlePlay(nextSquares: string[], row: number, col: number) {
+        const newPosition = { row, col };
+        console.log(newPosition);
+
         const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
-        console.log(nextHistory);
+        const nextPosition = [...positions.slice(0, currentMove), newPosition];
 
         setHistory(nextHistory);
-        setCurrentMove(nextHistory.length - 1)
+        setposition(nextPosition)
+        setCurrentMove(nextHistory.length - 1);
     }
 
     //updated current move when click on element history
@@ -45,6 +51,7 @@ export default function Game() {
                     history={history}
                     currentMove={currentMove}
                     jumpTo={jumpTo}
+                    positions={positions}
                 />
             </div>
         </>
