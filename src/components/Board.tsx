@@ -4,7 +4,7 @@ import calculateWinner from "../utils/calculateWinner";
 interface BoardProp {
     xIsNext: boolean;
     squares: string[];
-    onPlay: (nextSquares: string[]) => void
+    onPlay: (nextSquares: string[]) => void;
 }
 
 export default function Board({ xIsNext, squares, onPlay }: BoardProp) {
@@ -45,6 +45,8 @@ export default function Board({ xIsNext, squares, onPlay }: BoardProp) {
         onPlay(nextSquares)
     }
 
+    console.log(squares);
+    
     return (
         <>
             <ul className="flex flex-col gap-1 bg-slate-900">

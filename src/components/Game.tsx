@@ -1,5 +1,5 @@
-import Board from "./Board";
 import { useState } from "react";
+import Board from "./Board";
 import History from "./History";
 import Status from "./Status";
 
