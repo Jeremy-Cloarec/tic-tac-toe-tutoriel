@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Board from "./Board";
 import History from "./History";
 import Status from "./Status";
@@ -8,7 +8,12 @@ export default function Game() {
     const [history, setHistory] = useState([Array(9).fill(null)]);
     //show current move with inital value = 0 (beginning of the part)
     const [currentMove, setCurrentMove] = useState(0);
-    const [positions, setposition] = useState<{ row: number, col: number }[]>([])
+    const [positions, setposition] = useState<{ row: number, col: number }[]>([]);
+    const [choosenOponent, setChoosenOponent] = useState("without-oponent")
+
+    useEffect(() => {
+        console.log(choosenOponent);
+    }, [choosenOponent])
 
     //true if current move is even
     const xIsNext: boolean = currentMove % 2 === 0;
@@ -41,10 +46,13 @@ export default function Game() {
                 <Status
                     squares={currentSquares}
                     xIsNext={xIsNext}
+                    choosenOponent={choosenOponent}
+                    setChoosenOponent={setChoosenOponent}
                 />
                 <Board
                     xIsNext={xIsNext}
                     squares={currentSquares}
+                    choosenOponent={choosenOponent}
                     onPlay={handlePlay}
                 />
                 <History
