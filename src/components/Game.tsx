@@ -23,7 +23,11 @@ export default function Game() {
     //function to update history array and current move
     //it call when use click on on square and call handleClick (in Board component)
     //nextHistoty copy history array, from 0 to currentMove + 1 and updated history with it
+    let count = 0
     function handlePlay(nextSquares: string[], row: number, col: number) {
+        count++
+        console.log(`Handle Play : ${count} `);
+        
         const newPosition = { row, col };
         console.log(newPosition);
 

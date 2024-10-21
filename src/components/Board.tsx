@@ -46,15 +46,25 @@ export default function Board({ xIsNext, squares, choosenOponent, onPlay }: Boar
 
         xIsNext ? nextSquares[i] = "X" : nextSquares[i] = "O";
 
-        if(choosenOponent === "hasard" ) {
-            playingHasard()
-        }
-
         onPlay(nextSquares, row, col)
+        if (choosenOponent === "hasard") {
+            playingHasard(nextSquares)
+        }
+        return
     }
 
-    function playingHasard(){
-        console.log('Hasard');
+    function playingHasard(nextSquares: string[]) {
+        let i = Math.floor(Math.random() * 9);
+        if (nextSquares.every(nextSquare => nextSquare)) {
+            return
+        }
+        //recursive function
+        //if square 
+        if (!nextSquares[i]) {
+            xIsNext ? nextSquares[i] = "X" : nextSquares[i] = "O";
+            return
+        }
+        playingHasard(nextSquares)
     }
 
     return (

@@ -12,8 +12,7 @@ interface HistoryProp {
 export default function History({ history, currentMove, positions, jumpTo }: HistoryProp) {
     let [reversed, setReversed] = useState(false);
     let src = "";
-
-
+    
     //Show history of each move. OnClick, update current move
     let moves = history.map((_, move) => {
         let description: string;
@@ -34,10 +33,6 @@ export default function History({ history, currentMove, positions, jumpTo }: His
         if (move === currentMove && move > 0) {
             description = `You are at move #${move}`
             liCurrentMove = true
-
-            // if (position) {
-            //     positionString += ` (row: ${position.row}, col: ${position.col})`;
-            // }
 
         } else if (move === currentMove) {
             description = "You are at game start";
