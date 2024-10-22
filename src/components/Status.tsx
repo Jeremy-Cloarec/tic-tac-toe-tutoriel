@@ -15,11 +15,8 @@ export default function Status({
     //winner: stock winner name
     //status: define winner if it exist, as if it show the next player
     const winner = calculateWinner(squares)
-    console.log(winner);
 
     let status;
-    console.log(squares);
-
 
     if (winner) {
         status = "Le gagnant est : " + winner.winner;

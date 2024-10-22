@@ -1,5 +1,6 @@
 import Square from "./Square";
 import calculateWinner from "../utils/calculateWinner";
+import { useEffect, useState } from "react";
 
 interface BoardProp {
     xIsNext: boolean;
@@ -9,8 +10,9 @@ interface BoardProp {
 }
 
 export default function Board({ xIsNext, squares, choosenOponent, onPlay }: BoardProp) {
-    const winnerInfo = calculateWinner(squares || Array(9).fill(null));;
+    const winnerInfo = calculateWinner(squares);
     const winnerSquares = winnerInfo?.winnerSquares || []
+    const [isAgainstHasard, setIsAgainstHasard] = useState(false)
 
     const squaresRendered = []
     /*squaresRendered: a tow dimensionnal array makes with the prop squares
@@ -30,14 +32,6 @@ export default function Board({ xIsNext, squares, choosenOponent, onPlay }: Boar
         squaresRendered.push(row);
     }
 
-    /*
-    handleClick: when user click on one of the squares
-    => if square have a value, return
-    => if calculateWinner return a value, return
-    => define a copy of the prop array
-    => add value to the clicked element of this copy : "X" or "O" according to the xIsNext value
-    => call onPlay function with nextSquares as argument
-    */
     function handleClick(i: number, row: number, col: number) {
         if (squares[i] || calculateWinner(squares)) return
         let nextSquares = squares.slice();
@@ -49,35 +43,40 @@ export default function Board({ xIsNext, squares, choosenOponent, onPlay }: Boar
         onPlay(nextSquares, row, col)
 
         if (choosenOponent === "hasard" && !calculateWinner(nextSquares)) {
-            setTimeout(() => {
-                playingHasard(nextSquares)
-            }, 500)
+            setIsAgainstHasard(true)
         }
     }
-
-    function playingHasard(nextS: string[]) {
-
-        //filtering empty squares
-        const emptySquares = nextS
-            .map((value, index) => (value === null ? index : null))
-            .filter(value => value !== null);
-
-        //If all squares are filled, stop
-        if (emptySquares.length === 0) return
-
-        //Pick an empty square
-        const randomIndex = emptySquares[Math.floor(Math.random() * emptySquares.length)];
-
-        //hasard player play
-        nextS[randomIndex] = xIsNext ? "0" : "X";
-
-        //position calcul
-        const row = Math.floor(randomIndex / 3);
-        const col = randomIndex % 3;
-        //On Play
-        onPlay(nextS, row, col);
-    }
     
+    useEffect(() => {
+        if (isAgainstHasard) {
+            setTimeout(() => {
+                let nextS = squares.slice();
+                const emptySquares = nextS
+                    .map((value, index) => (value === null ? index : null))
+                    .filter(value => value !== null);
+
+                //If all squares are filled, stop
+                if (emptySquares.length === 0) return
+
+                //Pick an empty square
+                const randomIndex = emptySquares[Math.floor(Math.random() * emptySquares.length)];
+
+                //hasard player play
+                nextS[randomIndex] = !xIsNext ? "O" : "X";
+
+                //position calcul
+                const row = Math.floor(randomIndex / 3);
+                const col = randomIndex % 3;
+
+                setTimeout(() => {
+                    //On Play
+                    onPlay(nextS, row, col);
+                }, 500)
+
+                setIsAgainstHasard(false)
+            }, 500)
+        }
+    }, [isAgainstHasard])
 
 
     return (
