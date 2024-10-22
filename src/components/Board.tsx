@@ -9,7 +9,7 @@ interface BoardProp {
 }
 
 export default function Board({ xIsNext, squares, choosenOponent, onPlay }: BoardProp) {
-    const winnerInfo = calculateWinner(squares);
+    const winnerInfo = calculateWinner(squares || Array(9).fill(null));;
     const winnerSquares = winnerInfo?.winnerSquares || []
 
     const squaresRendered = []
@@ -42,30 +42,43 @@ export default function Board({ xIsNext, squares, choosenOponent, onPlay }: Boar
         if (squares[i] || calculateWinner(squares)) return
         let nextSquares = squares.slice();
 
-        nextSquares = [...nextSquares]
+        // player play
+        nextSquares[i] = xIsNext ? "X" : "O";
 
-        xIsNext ? nextSquares[i] = "X" : nextSquares[i] = "O";
-
+        //record the game
         onPlay(nextSquares, row, col)
-        if (choosenOponent === "hasard") {
-            playingHasard(nextSquares)
+
+        if (choosenOponent === "hasard" && !calculateWinner(nextSquares)) {
+            setTimeout(() => {
+                playingHasard(nextSquares)
+            }, 500)
         }
-        return
     }
 
-    function playingHasard(nextSquares: string[]) {
-        let i = Math.floor(Math.random() * 9);
-        if (nextSquares.every(nextSquare => nextSquare)) {
-            return
-        }
-        //recursive function
-        //if square 
-        if (!nextSquares[i]) {
-            xIsNext ? nextSquares[i] = "X" : nextSquares[i] = "O";
-            return
-        }
-        playingHasard(nextSquares)
+    function playingHasard(nextS: string[]) {
+
+        //filtering empty squares
+        const emptySquares = nextS
+            .map((value, index) => (value === null ? index : null))
+            .filter(value => value !== null);
+
+        //If all squares are filled, stop
+        if (emptySquares.length === 0) return
+
+        //Pick an empty square
+        const randomIndex = emptySquares[Math.floor(Math.random() * emptySquares.length)];
+
+        //hasard player play
+        nextS[randomIndex] = xIsNext ? "0" : "X";
+
+        //position calcul
+        const row = Math.floor(randomIndex / 3);
+        const col = randomIndex % 3;
+        //On Play
+        onPlay(nextS, row, col);
     }
+    
+
 
     return (
         <>

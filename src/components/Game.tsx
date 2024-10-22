@@ -12,8 +12,8 @@ export default function Game() {
     const [choosenOponent, setChoosenOponent] = useState("without-oponent")
 
     useEffect(() => {
-        console.log(choosenOponent);
-    }, [choosenOponent])
+        console.log("history: " + history);
+    }, [history])
 
     //true if current move is even
     const xIsNext: boolean = currentMove % 2 === 0;
@@ -23,21 +23,19 @@ export default function Game() {
     //function to update history array and current move
     //it call when use click on on square and call handleClick (in Board component)
     //nextHistoty copy history array, from 0 to currentMove + 1 and updated history with it
-    let count = 0
-    function handlePlay(nextSquares: string[], row: number, col: number) {
-        count++
-        console.log(`Handle Play : ${count} `);
-        
+
+    async function handlePlay(nextSquares: string[], row: number, col: number) {
         const newPosition = { row, col };
-        console.log(newPosition);
 
         const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
         const nextPosition = [...positions.slice(0, currentMove), newPosition];
-
+        console.log(nextHistory);
+        
         setHistory(nextHistory);
         setposition(nextPosition)
         setCurrentMove(nextHistory.length - 1);
     }
+
 
     //updated current move when click on element history
     function jumpTo(nextMove: number) {
@@ -58,6 +56,7 @@ export default function Game() {
                     squares={currentSquares}
                     choosenOponent={choosenOponent}
                     onPlay={handlePlay}
+                    
                 />
                 <History
                     history={history}

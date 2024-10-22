@@ -56,11 +56,9 @@ export default function History({ history, currentMove, positions, jumpTo }: His
                     </div>
                     )
                 }
-
             </li>
         )
     })
-
 
 
     if (reversed) moves = moves.reverse()
