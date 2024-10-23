@@ -4,18 +4,19 @@ interface StatusProps {
     squares: string[];
     xIsNext: boolean;
     choosenOponent: string;
-    setChoosenOponent: any
+    setChoosenOponent: (value: string) => void;
+    resetGame: () => void;
 }
 export default function Status({
     squares,
     xIsNext,
     choosenOponent,
-    setChoosenOponent
+    setChoosenOponent,
+    resetGame
 }: StatusProps) {
     //winner: stock winner name
     //status: define winner if it exist, as if it show the next player
     const winner = calculateWinner(squares)
-
     let status;
 
     if (winner) {
@@ -37,16 +38,16 @@ export default function Status({
                 id="level"
                 className="text-black"
                 value={choosenOponent}
-                onChange={e => setChoosenOponent(e.target.value)}
+                onChange={e => {
+                    setChoosenOponent(e.target.value)
+                    resetGame()
+                }}
             >
                 <option value="without-oponent">
                     Sans adversaire
                 </option>
                 <option value="hasard">
                     Contre le hasard
-                </option>
-                <option value="hard-oponent">
-                    Adversaire très difficile
                 </option>
             </select>
         </div>

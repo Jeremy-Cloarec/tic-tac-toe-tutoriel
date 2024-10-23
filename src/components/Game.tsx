@@ -9,7 +9,7 @@ export default function Game() {
     //show current move with inital value = 0 (beginning of the part)
     const [currentMove, setCurrentMove] = useState(0);
     const [positions, setposition] = useState<{ row: number, col: number }[]>([]);
-    const [choosenOponent, setChoosenOponent] = useState("without-oponent")
+    const [choosenOponent, setChoosenOponent] = useState("without-oponent");
 
     useEffect(() => {
         console.log(history);
@@ -21,23 +21,28 @@ export default function Game() {
     const currentSquares = history[currentMove];
 
     //function to update history array and current move
-    //it call when use click on on square and call handleClick (in Board component)
+    //it call when user click on a square and call handleClick (in Board component)
     //nextHistoty copy history array, from 0 to currentMove + 1 and updated history with it
-
     function handlePlay(nextSquares: string[], row: number, col: number) {
         const newPosition = { row, col };
         const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
         const nextPosition = [...positions.slice(0, currentMove), newPosition];
         
         setHistory(nextHistory);
-        setposition(nextPosition)
+        setposition(nextPosition);
         setCurrentMove(nextHistory.length - 1);
     }
 
-
     //updated current move when click on element history
     function jumpTo(nextMove: number) {
-        setCurrentMove(nextMove)
+        setCurrentMove(nextMove);
+    }
+
+    //reset game
+    function resetGame(){
+        setCurrentMove(0);
+        setHistory([Array(9).fill(null)]);
+        setposition([{ row: 0, col: 0 }]);
     }
 
     return (
@@ -48,13 +53,13 @@ export default function Game() {
                     xIsNext={xIsNext}
                     choosenOponent={choosenOponent}
                     setChoosenOponent={setChoosenOponent}
+                    resetGame={resetGame}
                 />
                 <Board
                     xIsNext={xIsNext}
                     squares={currentSquares}
                     choosenOponent={choosenOponent}
                     onPlay={handlePlay}
-                    
                 />
                 <History
                     history={history}
