@@ -33,7 +33,11 @@ export default function Board({ xIsNext, squares, choosenOponent, onPlay }: Boar
     }
 
     function handleClick(i: number, row: number, col: number) {
+        //If the square is already filled or there is a winner, stop
         if (squares[i] || calculateWinner(squares)) return
+
+        //If the player is playing against the computer and it is not his turn, stop
+        if (isAgainstHasard) return
         let nextSquares = squares.slice();
 
         // player play
