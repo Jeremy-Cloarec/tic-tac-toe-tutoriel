@@ -41,7 +41,7 @@ export default function Board({ xIsNext, squares, choosenOponent, onPlay }: Boar
         let nextSquares = squares.slice();
 
         // player play
-        nextSquares[i] = xIsNext ? "X" : "O";
+        nextSquares[i] = xIsNext ? "🎃" : "🦇";
 
         //record the game
         onPlay(nextSquares, row, col)
@@ -66,7 +66,7 @@ export default function Board({ xIsNext, squares, choosenOponent, onPlay }: Boar
                 const randomIndex = emptySquares[Math.floor(Math.random() * emptySquares.length)];
 
                 //hasard player play
-                nextS[randomIndex] = !xIsNext ? "O" : "X";
+                nextS[randomIndex] = xIsNext ? "🎃" : "🦇";
 
                 //position calcul
                 const row = Math.floor(randomIndex / 3);
@@ -84,19 +84,19 @@ export default function Board({ xIsNext, squares, choosenOponent, onPlay }: Boar
 
 
     return (
-        <>
-            <ul className="flex flex-col gap-1 bg-slate-900">
+        <div className="px-7">
+            <ul className="flex flex-col gap-0.5 bg-brown w-full min-w-32 min-h-32 p-0.5">
                 {squaresRendered.map((row, rowIndex) => (
                     <li key={rowIndex}>
-                        <ul className="flex gap-1">
+                        <ul className="flex gap-0.5">
                             {row.map((value, colIndex) => {
                                 const index = rowIndex * 3 + colIndex;
                                 const isWinnerSquare = winnerSquares.includes(value.ind);
                                 const squareStyle = isWinnerSquare
-                                    ? "font-bold flex w-16 h-16 items-center justify-center bg-orange-200 text-slate-900"
-                                    : "font-bold flex w-16 h-16 items-center justify-center bg-white text-slate-900";
+                                    ? "text-5xl flex w-full min-w-6 min-h-6 aspect-square items-center justify-center bg-brown"
+                                    : "text-5xl flex w-full min-w-6 min-h-6 items-center justify-center bg-orange aspect-square";
                                 return (
-                                    <li key={colIndex}>
+                                    <li key={colIndex} className="w-full aspect-square min-w-8 min-h-8">
                                         <Square
                                             value={value.value}
                                             onSquareClick={() => handleClick(index, rowIndex, colIndex)}
@@ -109,6 +109,6 @@ export default function Board({ xIsNext, squares, choosenOponent, onPlay }: Boar
                     </li>
                 ))}
             </ul>
-        </>
+        </div>
     )
 }

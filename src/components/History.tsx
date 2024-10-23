@@ -51,7 +51,7 @@ export default function History({ history, currentMove, positions, jumpTo }: His
                     )
                     :
                     (<div>
-                        <p className="font-semibold">{description}</p>
+                        <p>{description}</p>
                         <p className="text-sm">{positionString}</p>
                     </div>
                     )
@@ -60,14 +60,12 @@ export default function History({ history, currentMove, positions, jumpTo }: His
         )
     })
 
-
     if (reversed) moves = moves.reverse()
     !reversed ? src = sort : src = sortReverse
 
     return (
         <div className="flex flex-col gap-2">
             <div className="flex justify-between items-center">
-                <h2 className="font-semibold">Historique</h2>
                 <button
                     onClick={() => setReversed(reversed = !reversed)}
                     className="bg-white py-1 px-1 rounded-sm">
@@ -78,7 +76,7 @@ export default function History({ history, currentMove, positions, jumpTo }: His
                     />
                 </button>
             </div>
-            <ul>{moves}</ul>
+            <ul className="font-alice">{moves}</ul>
         </div>
     )
 }

@@ -3,16 +3,10 @@ import calculateWinner from "../utils/calculateWinner";
 interface StatusProps {
     squares: string[];
     xIsNext: boolean;
-    choosenOponent: string;
-    setChoosenOponent: (value: string) => void;
-    resetGame: () => void;
 }
 export default function Status({
     squares,
     xIsNext,
-    choosenOponent,
-    setChoosenOponent,
-    resetGame
 }: StatusProps) {
     //winner: stock winner name
     //status: define winner if it exist, as if it show the next player
@@ -20,36 +14,28 @@ export default function Status({
     let status;
 
     if (winner) {
-        status = "Le gagnant est : " + winner.winner;
+        // Utiliser JSX pour afficher le message du gagnant
+        status = (
+            <>
+                Le gagnant est : <span className="text-3xl">{winner.winner}</span>
+            </>
+        );
     } else if (squares.every(square => square)) {
-        status = "Match null !"
-    }
-    else {
-        status = "Prochain joueur : " + (xIsNext ? "X" : "O");
+        status = "Match nul !";
+    } else {
+        // Utiliser JSX pour afficher le prochain joueur
+        status = (
+            <>
+                Prochain joueur : <span className="text-3xl">{xIsNext ? "🎃" : "🦇"}</span>
+            </>
+        );
     }
 
     return (
         <div>
-            <p>
+            <p className="font-alice text-center py-8">
                 {status}
             </p>
-            <select
-                name="level"
-                id="level"
-                className="text-black"
-                value={choosenOponent}
-                onChange={e => {
-                    setChoosenOponent(e.target.value)
-                    resetGame()
-                }}
-            >
-                <option value="without-oponent">
-                    Sans adversaire
-                </option>
-                <option value="hasard">
-                    Contre le hasard
-                </option>
-            </select>
         </div>
     )
 }
