@@ -47,16 +47,16 @@ export default function History({ history, currentMove, positions, jumpTo }: His
                             onClick={() => jumpTo(move)}
                             className="hover:bg-orangeHover transition-colors duration-400 py-3 px-3 w-full rounded-lg"
                         >
-                            <p>{description}</p>
-                            <p className="text-sm text-brownLight">{positionString}
+                            <p className="text-lg">{description}</p>
+                            <p className="text-brownLight">{positionString}
                             </p>
                         </button>
                     )
                     :
                     (
                         <div className="bg-orangeLight py-3 px-3 w-full rounded-lg text-center">
-                            <p>{description}</p>
-                            <p className="text-sm text-brownLight">{positionString}</p>
+                            <p className="text-lg">{description}</p>
+                            <p className="text-brownLight">{positionString}</p>
                         </div>
                     )
                 }
@@ -68,19 +68,17 @@ export default function History({ history, currentMove, positions, jumpTo }: His
     !reversed ? src = sort : src = sortReverse
 
     return (
-        <div className="relative">
-            <div className="absolute right-7">
+        <div className="relative min-w-56 max-w-80">
+            <div className="absolute top-0 right-[-32px] md:right-0 md:top-[-32px]">
                 <button
-                    onClick={() => setReversed(reversed = !reversed)}
-                    className="bg-white py-1 px-1 rounded-sm">
+                    onClick={() => setReversed(reversed = !reversed)}>
                     <img
                         src={src}
                         alt="sort logo"
-                        className="w-4.5"
                     />
                 </button>
             </div>
-            <ul className="font-alice flex flex-col gap-1 px-16 pt-8 ">{moves}</ul>
+            <ul className="font-alice flex flex-col gap-1">{moves}</ul>
         </div>
     )
 }

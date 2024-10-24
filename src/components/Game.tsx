@@ -44,7 +44,7 @@ export default function Game() {
 
     return (
         <>
-            <nav className="flex gap-8 justify-between  items-center">
+            <nav className="flex gap-2 justify-between  items-center flex-wrap max-w-[1024px] m-auto">
                 <h1 className='text-3xl text-center font-creepster'>Morpion</h1>
                 <Opponent
                     choosenOponent={choosenOponent}
@@ -52,12 +52,12 @@ export default function Game() {
                     setChoosenOponent={setChoosenOponent}
                 />
             </nav>
-            <div className="flex flex-col justify-center">
+            <main className="flex flex-col justify-center align-center">
                 <Status
                     squares={currentSquares}
                     xIsNext={xIsNext}
                 />
-                <div className="flex flex-col gap-5">
+                <div className="flex flex-col md:flex-row m-auto md:items-start md:justify-center max-w-3xl w-full items-center gap-8">
                     <Board
                         xIsNext={xIsNext}
                         squares={currentSquares}
@@ -71,7 +71,7 @@ export default function Game() {
                         positions={positions}
                     />
                 </div>
-            </div>
+            </main>
         </>
     )
 }

@@ -84,10 +84,10 @@ export default function Board({ xIsNext, squares, choosenOponent, onPlay }: Boar
 
 
     return (
-        <div className="px-7">
-            <ul className="flex flex-col gap-0.5 bg-brown w-full min-w-32 min-h-32 p-0.5">
+        <div className="w-full flex justify-center">
+            <ul className="flex flex-col gap-0.5 bg-brown w-full p-0.5 min-w-56 max-w-80 md:max-w-none">
                 {squaresRendered.map((row, rowIndex) => (
-                    <li key={rowIndex}>
+                    <li key={rowIndex} className="w-full">
                         <ul className="flex gap-0.5">
                             {row.map((value, colIndex) => {
                                 const index = rowIndex * 3 + colIndex;
