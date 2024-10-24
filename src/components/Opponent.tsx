@@ -13,15 +13,13 @@ const options = [
 ]
 
 export default function Opponent({ choosenOponent, setChoosenOponent, resetGame }: OpponentProps) {
-
-    const currentValue = options.find(option => option.value === choosenOponent)
-
+    const currentValue = options.find(option => option.value === choosenOponent);
 
     useEffect(() => {
         if (!choosenOponent) {
             setChoosenOponent(options[0].value)
         }
-    }, [])
+    }, []);
 
     return (
         <Select
@@ -60,7 +58,7 @@ export default function Opponent({ choosenOponent, setChoosenOponent, resetGame 
                     ...baseStyles,
                     color: '#2E1901',
                 }),
-                dropdownIndicator: (baseStyles, state) => ({
+                dropdownIndicator: (baseStyles) => ({
                     ...baseStyles,
                     color: '#7C4200',  // Couleur de la flèche
                     ':hover': {
