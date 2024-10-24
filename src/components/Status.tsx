@@ -33,7 +33,7 @@ export default function Status({
 
     return (
         <div>
-            <p className="font-alice text-center py-8">
+            <p className="font-alice text-center py-12">
                 {status}
             </p>
         </div>

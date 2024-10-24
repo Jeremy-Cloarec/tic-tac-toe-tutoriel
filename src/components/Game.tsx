@@ -51,9 +51,8 @@ export default function Game() {
                     resetGame={resetGame}
                     setChoosenOponent={setChoosenOponent}
                 />
-
             </nav>
-            <div className="flex flex-col gap-4 justify-center">
+            <div className="flex flex-col justify-center">
                 <Status
                     squares={currentSquares}
                     xIsNext={xIsNext}

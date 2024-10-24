@@ -12,7 +12,7 @@ interface HistoryProp {
 export default function History({ history, currentMove, positions, jumpTo }: HistoryProp) {
     let [reversed, setReversed] = useState(false);
     let src = "";
-    
+
     //Show history of each move. OnClick, update current move
     let moves = history.map((_, move) => {
         let description: string;
@@ -21,39 +21,43 @@ export default function History({ history, currentMove, positions, jumpTo }: His
         const position = positions[move - 1]
 
         if (move > 0) {
-            description = `Go to move #${move}`
+            description = `Aller au mouvement #${move}`
             if (position) {
-                positionString += `position : row: ${position.row}, col: ${position.col})`;
+                positionString += `ligne ${position.row}, colonne ${position.col}`;
             }
 
         } else {
-            description = 'Go to game start'
+            description = 'Aller au début du jeu'
         }
 
         if (move === currentMove && move > 0) {
-            description = `You are at move #${move}`
+            description = `Tu es au mouvement #${move}`
             liCurrentMove = true
 
         } else if (move === currentMove) {
-            description = "You are at game start";
+            description = "Tu es au début du jeu";
             liCurrentMove = true;
         }
 
         return (
             <li key={move}>
                 {!liCurrentMove ?
-                    (<div>
-                        <button onClick={() => jumpTo(move)}>
+                    (
+                        <button
+                            onClick={() => jumpTo(move)}
+                            className="hover:bg-orangeHover transition-colors duration-400 py-3 px-3 w-full rounded-lg"
+                        >
                             <p>{description}</p>
+                            <p className="text-sm text-brownLight">{positionString}
+                            </p>
                         </button>
-                        <p className="text-sm">{positionString}</p>
-                    </div>
                     )
                     :
-                    (<div>
-                        <p>{description}</p>
-                        <p className="text-sm">{positionString}</p>
-                    </div>
+                    (
+                        <div className="bg-orangeLight py-3 px-3 w-full rounded-lg text-center">
+                            <p>{description}</p>
+                            <p className="text-sm text-brownLight">{positionString}</p>
+                        </div>
                     )
                 }
             </li>
@@ -64,8 +68,8 @@ export default function History({ history, currentMove, positions, jumpTo }: His
     !reversed ? src = sort : src = sortReverse
 
     return (
-        <div className="flex flex-col gap-2">
-            <div className="flex justify-between items-center">
+        <div className="relative">
+            <div className="absolute right-7">
                 <button
                     onClick={() => setReversed(reversed = !reversed)}
                     className="bg-white py-1 px-1 rounded-sm">
@@ -76,7 +80,7 @@ export default function History({ history, currentMove, positions, jumpTo }: His
                     />
                 </button>
             </div>
-            <ul className="font-alice">{moves}</ul>
+            <ul className="font-alice flex flex-col gap-1 px-16 pt-8 ">{moves}</ul>
         </div>
     )
 }

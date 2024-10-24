@@ -9,6 +9,7 @@ export default {
   theme: {
     colors: {
       orange: '#F6AC57',
+      orangeHover: '#FCBD76',
       orangeLight: '#FFCD94',
       brown: '#2E1901',
       brownLight: '#7C4200'
