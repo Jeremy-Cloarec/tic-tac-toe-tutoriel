@@ -11,8 +11,9 @@ interface BoardProp {
 
 export default function Board({ xIsNext, squares, choosenOponent, onPlay }: BoardProp) {
     const winnerInfo = calculateWinner(squares);
-    const winnerSquares = winnerInfo?.winnerSquares || []
-    const [isAgainstHasard, setIsAgainstHasard] = useState(false)
+    const winnerSquares = winnerInfo?.winnerSquares || [];
+    const [isComputerTurn, setIsComputerTurn] = useState(false);
+    const [isProcessingMove, setIsProcessingMove] = useState(false);
 
     const squaresRendered = []
     /*squaresRendered: a tow dimensionnal array makes with the prop squares
@@ -33,11 +34,12 @@ export default function Board({ xIsNext, squares, choosenOponent, onPlay }: Boar
     }
 
     function handleClick(i: number, row: number, col: number) {
+        //If the player is playing against the computer and it is not his turn, stop
+        if (isComputerTurn || isProcessingMove) return;
+
         //If the square is already filled or there is a winner, stop
         if (squares[i] || calculateWinner(squares)) return
 
-        //If the player is playing against the computer and it is not his turn, stop
-        if (isAgainstHasard) return
         let nextSquares = squares.slice();
 
         // player play
@@ -47,20 +49,30 @@ export default function Board({ xIsNext, squares, choosenOponent, onPlay }: Boar
         onPlay(nextSquares, row, col)
 
         if (choosenOponent === "hasard" && !calculateWinner(nextSquares)) {
-            setIsAgainstHasard(true)
+            setIsComputerTurn(true);
         }
+
+        setIsProcessingMove(false);
     }
-    
+
     useEffect(() => {
-        if (isAgainstHasard) {
-            setTimeout(() => {
-                let nextS = squares.slice();
+        let timeoutId: ReturnType<typeof setTimeout>;
+
+        if (isComputerTurn && !calculateWinner(squares)) {
+            setIsProcessingMove(true);
+
+            timeoutId = setTimeout(() => {
+                const nextS = squares.slice();
                 const emptySquares = nextS
                     .map((value, index) => (value === null ? index : null))
                     .filter(value => value !== null);
 
                 //If all squares are filled, stop
-                if (emptySquares.length === 0) return
+                if (emptySquares.length === 0) {
+                    setIsProcessingMove(false);
+                    setIsComputerTurn(false);
+                    return;
+                }
 
                 //Pick an empty square
                 const randomIndex = emptySquares[Math.floor(Math.random() * emptySquares.length)];
@@ -72,15 +84,19 @@ export default function Board({ xIsNext, squares, choosenOponent, onPlay }: Boar
                 const row = Math.floor(randomIndex / 3);
                 const col = randomIndex % 3;
 
-                setTimeout(() => {
-                    //On Play
-                    onPlay(nextS, row, col);
-                }, 500)
-
-                setIsAgainstHasard(false)
+                //record the game
+                onPlay(nextS, row, col);
+                setIsProcessingMove(false);
+                setIsComputerTurn(false);
             }, 500)
         }
-    }, [isAgainstHasard])
+
+        return () => {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+        };
+    }, [isComputerTurn, squares, xIsNext, onPlay])
 
 
     return (
