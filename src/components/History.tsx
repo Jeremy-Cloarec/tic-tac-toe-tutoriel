@@ -75,6 +75,7 @@ export default function History({ history, currentMove, positions, jumpTo }: His
                     <img
                         src={src}
                         alt="sort logo"
+                        className="w-[17px] h-[12px]"
                     />
                 </button>
             </div>
