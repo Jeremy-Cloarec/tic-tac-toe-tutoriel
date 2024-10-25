@@ -117,6 +117,7 @@ export default function Board({ xIsNext, squares, choosenOponent, onPlay }: Boar
                                             value={value.value}
                                             onSquareClick={() => handleClick(index, rowIndex, colIndex)}
                                             styleSquare={squareStyle}
+                                            position={{ row: rowIndex, col: colIndex }}
                                         />
                                     </li>
                                 );
