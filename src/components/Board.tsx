@@ -93,8 +93,8 @@ export default function Board({ xIsNext, squares, choosenOponent, onPlay }: Boar
                                 const index = rowIndex * 3 + colIndex;
                                 const isWinnerSquare = winnerSquares.includes(value.ind);
                                 const squareStyle = isWinnerSquare
-                                    ? "text-5xl flex w-full min-w-6 min-h-6 aspect-square items-center justify-center bg-brown"
-                                    : "text-5xl flex w-full min-w-6 min-h-6 items-center justify-center bg-orange aspect-square";
+                                    ? "text-5xl md:text-7xl flex w-full min-w-6 min-h-6 aspect-square items-center justify-center bg-brown"
+                                    : "text-5xl md:text-7xl flex w-full min-w-6 min-h-6 items-center justify-center bg-orange aspect-square";
                                 return (
                                     <li key={colIndex} className="w-full aspect-square min-w-8 min-h-8">
                                         <Square

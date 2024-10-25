@@ -17,6 +17,9 @@ export default function Game() {
     //array with currentMove index    
     const currentSquares = history[currentMove];
 
+    const date = new Date();
+    const year = date.getFullYear();
+
     //function to update history array and current move
     //it call when user click on a square and call handleClick (in Board component)
     //nextHistoty copy history array, from 0 to currentMove + 1 and updated history with it
@@ -44,20 +47,20 @@ export default function Game() {
 
     return (
         <>
-            <nav className="flex gap-2 justify-between  items-center flex-wrap max-w-[1024px] m-auto">
-                <h1 className='text-3xl text-center font-creepster'>Morpion</h1>
+            <nav className="flex gap-2 justify-between  items-center flex-wrap max-w-7xl m-auto w-full">
+                <h1 className='text-4xl md:text-5xl  text-center font-creepster'>Morpion</h1>
                 <Opponent
                     choosenOponent={choosenOponent}
                     resetGame={resetGame}
                     setChoosenOponent={setChoosenOponent}
                 />
             </nav>
-            <main className="flex flex-col justify-center align-center">
+            <main className="flex flex-col align-center flex-1 items-center mb-9">
                 <Status
                     squares={currentSquares}
                     xIsNext={xIsNext}
                 />
-                <div className="flex flex-col md:flex-row m-auto md:items-start md:justify-center max-w-3xl w-full items-center gap-8">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-center max-w-2xl w-full items-center gap-8">
                     <Board
                         xIsNext={xIsNext}
                         squares={currentSquares}
@@ -72,6 +75,11 @@ export default function Game() {
                     />
                 </div>
             </main>
+            <footer className="max-w-7xl m-auto w-full pt-2 font-alice border-t border-brownLight border-solid">
+                <p>
+                    <a href="https://github.com/jeremy-cloarec" target="_blank" className="hover:underline underline-offset-2">Jérémy - {year}</a>
+                </p>
+            </footer>
         </>
     )
 }

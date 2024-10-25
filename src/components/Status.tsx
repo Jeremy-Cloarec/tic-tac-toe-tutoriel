@@ -17,7 +17,7 @@ export default function Status({
         // Utiliser JSX pour afficher le message du gagnant
         status = (
             <>
-                Le gagnant est : <span className="text-3xl">{winner.winner}</span>
+                Le gagnant est : <span className="text-3xl md:text-4xl">{winner.winner}</span>
             </>
         );
     } else if (squares.every(square => square)) {
@@ -26,14 +26,14 @@ export default function Status({
         // Utiliser JSX pour afficher le prochain joueur
         status = (
             <>
-                Prochain joueur : <span className="text-3xl">{xIsNext ? "🎃" : "🦇"}</span>
+                Prochain joueur : <span className="text-3xl md:text-4xl">{xIsNext ? "🎃" : "🦇"}</span>
             </>
         );
     }
 
     return (
         <div>
-            <p className="font-alice text-center py-16 text-lg">
+            <p className="font-alice text-center py-16 text-lg md:text-xl">
                 {status}
             </p>
         </div>

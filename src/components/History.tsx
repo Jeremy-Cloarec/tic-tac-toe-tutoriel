@@ -69,7 +69,7 @@ export default function History({ history, currentMove, positions, jumpTo }: His
 
     return (
         <div className="relative min-w-56 max-w-80">
-            <div className="absolute top-0 right-[-32px] md:right-0 md:top-[-32px]">
+            <div className="absolute top-0 right-[-32px]">
                 <button
                     onClick={() => setReversed(reversed = !reversed)}>
                     <img
